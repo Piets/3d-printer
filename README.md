@@ -15,6 +15,9 @@ The power supply of the Neptune 3 already has a 5.5mm by 2.5mm barell jack on th
 ### Fan shroud
 While switching the main hot-end fan I also printed a ned fan enclosure. I used [this design](https://www.printables.com/model/270983-elegoo-neptune-3-fan-duct) by Tal.
 
+### Second Z axis
+Because only the left Z axis is normally driven by a stepper motor, I installed the Ender 3 second Z axis mod. This reduces the amount of sag on the X axis quite substantially. It also comes with a second stepper motor. As luck would have it the Neptune 3 main board already provides headers for an additional stepper driver. This is really useful as it can be used to automatically level the X gantry should it be out of alignment. This however needs to be confugured in the firmware.
+
 ### "Direct" extruder
 Because printing TPU on a bowden printer can be a real tough challenge I decided to mount the extruder directly above the hot-end. Luckily there already exists [this design](https://www.thingiverse.com/thing:5532317) by MaddatmyHat.
 
