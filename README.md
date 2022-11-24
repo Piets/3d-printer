@@ -24,6 +24,9 @@ Due to the ongoing shortage of RaspberryPis I used a BananaPI M2 Zero to run Oct
 ### OctoPrint
 As noted in the BananaPi section I run Octoprint. One of the plugins I have utilized is the PSU Control which enabled me to remotely turn the power to the printer on and off. This also ensures the power to the printer als automatically turned off after a print completed. I already use a few IKEA Tradfri outlets in my home, so I threw together a simple IKEA Tradfri plugin for the PSU Control plugin. You can find the repository [here](https://github.com/Piets/OctoPrint-PSUControl-Tradfri). But be warned that setup can be a bit of a pain due to the dependency on libcoap.
 
+### Camera
+To remotely monitor my 3d printer I mounted an old PlayStation 2 EyeToy camera to the side of the printer. It is supported natively by mjpedstreamer so works flawlessly with Octoprint.
+
 ### Klipper
 One of the latest changes to my Neptune 3 was installing Klipper on the BananaPi and flashing the accompanying firmware. You can find my currently used configuration in the `printer.cfg` file in this repository. The configuration ans build instructions were taken from [this repository](https://github.com/bsas/Neptune-Elegoo3-Klipper).  
 I have not yet mounted the ADXL345 sensors to the print bed and print head. As far as I currently understand it, the BananaPi has to independent SPI buses and therefore should support simultaneous operation of both sensors. I will update this information once I have confirmed this.
