@@ -33,3 +33,6 @@ To remotely monitor my 3d printer I mounted an old PlayStation 2 EyeToy camera t
 ### Klipper
 One of the latest changes to my Neptune 3 was installing Klipper on the BananaPi and flashing the accompanying firmware. You can find my currently used configuration in the `printer.cfg` file in this repository. The configuration ans build instructions were taken from [this repository](https://github.com/bsas/Neptune-Elegoo3-Klipper).  
 I have not yet mounted the ADXL345 sensors to the print bed and print head. As far as I currently understand it, the BananaPi has to independent SPI buses and therefore should support simultaneous operation of both sensors. I will update this information once I have confirmed this.
+
+### Double SPI Overlay
+The file `double-spi.dts` contains a custom overlay for Armbian for the Banana PI M2 Zero to enable both SPI buses. Copy to `/boot/overlay-user` and run `sudo armbian-add-overlay double-spi.dts` to enable.
