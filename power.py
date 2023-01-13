@@ -1393,8 +1393,8 @@ class TradfriDevice(PowerDevice):
         super().__init__(config)
         os.environ["AIOCOAP_CLIENT_TRANSPORT"] = "tinydtls"
         self.address = config.get("address", "")
-        self.identity = config.get("identity", "")
-        self.psk = config.get("psk", "")
+        self.identity = config.gettemplate("identity", "").render()
+        self.psk = config.gettemplate("psk", "").render()
         self.device_name = config.get("device_name", "")
         self.api_factory = None
         self.device = None
