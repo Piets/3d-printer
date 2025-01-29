@@ -1,0 +1,15 @@
+services:
+  # See: https://www.klipper3d.org/Measuring_Resonances.html
+  # After running TEST_RESONANCES or SHAPER_CALIBRATE extract csv files:
+  # docker compose exec klipper ls /tmp
+  # docker compose cp klipper:/tmp/resonances_x_20250129_183427.csv ./resonances/
+  # docker compose cp klipper:/tmp/resonances_y_20250129_183657.csv ./resonances/
+  # thereafter generate pngs:
+  # docker compose -f docker-compose.extra.calibrate-shaper.yml run --rm calibrate_shaper resonances_x_20250129_183427.csv -o cal_x.png
+  # docker compose -f docker-compose.extra.calibrate-shaper.yml run --rm calibrate_shaper resonances_y_20250129_183657.csv -o cal_y.png
+  calibrate_shaper:
+    image: mkuf/klipper:${TAG:-latest}-tools
+    entrypoint: python3 /opt/klipper/scripts/calibrate_shaper.py
+    working_dir: /opt/resonances
+    volumes:
+      - ./resonances:/opt/resonances

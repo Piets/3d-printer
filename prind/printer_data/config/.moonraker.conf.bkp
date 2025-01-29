@@ -1,0 +1,64 @@
+[server]
+host = 0.0.0.0
+port = 7125
+klippy_uds_address = /opt/printer_data/run/klipper.sock
+
+[machine]
+provider = systemd_cli
+validate_service = False
+
+[authorization]
+trusted_clients = 
+	0.0.0.0/0
+cors_domains = 
+	*
+
+[secrets]
+
+[octoprint_compat]
+
+[history]
+
+[announcements]
+subscriptions = 
+	mainsail
+
+[file_manager]
+enable_object_processing = True
+
+[zeroconf]
+mdns_hostname = printerpi
+
+[power printer]
+type = homeassistant
+protocol = http
+address = 192.168.1.4
+port = 8123
+device = switch.3d_drucker
+token = {secrets.home_assistant.token}
+domain = switch
+locked_while_printing = True
+restart_klipper_when_powered = True
+restart_delay = 2
+
+[webcam printer]
+location = printer
+icon = mdiWebcam
+service = webrtc-go2rtc
+stream_url = http://192.168.1.4:1984/stream.html?src=3d_drucker
+snapshot_url = http://192.168.1.4:1984/api/frame.jpeg?src=3d_drucker
+
+[notifier pushover]
+url = pover://{secrets.pushover.user_key}@{secrets.pushover.token}
+events = complete, error
+title = Printer
+body = "Your printer status has changed to {event_name}"
+attach = http://192.168.1.4:1984/api/frame.jpeg?src=3d_drucker
+
+[notifier pushover_gcode]
+url = pover://{secrets.pushover.user_key}@{secrets.pushover.token}
+events = gcode
+title = Printer
+body = {event_message}
+attach = http://192.168.1.4:1984/api/frame.jpeg?src=3d_drucker
+

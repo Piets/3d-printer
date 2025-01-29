@@ -1,0 +1,137 @@
+## Service Definitions
+services:
+  ## Klippy Services
+  ##
+  klipper:
+    image: mkuf/klipper:latest
+    restart: unless-stopped
+    privileged: true
+    logging:
+      driver: none
+    depends_on:
+      init:
+        condition: service_completed_successfully
+      hostmcu:
+        condition: service_started
+    command: >
+      -I printer_data/run/klipper.tty
+      -a printer_data/run/klipper.sock
+      printer_data/config/printer.cfg
+      -l printer_data/logs/klippy.log
+    volumes:
+      - /dev:/dev
+      - ./printer_data/config:/opt/printer_data/config
+      - ./printer_data/gcodes:/opt/printer_data/gcodes
+      - run:/opt/printer_data/run
+      - log:/opt/printer_data/logs
+    labels:
+      org.prind.service: klipper
+
+  ## WebApi
+  ##
+  moonraker:
+    image: mkuf/moonraker:latest
+    restart: unless-stopped
+    pid: host
+    logging:
+      driver: none
+    depends_on:
+      init:
+        condition: service_completed_successfully
+      klipper:
+        condition: service_started
+    volumes:
+      - /dev/null:/opt/klipper/config/null
+      - /dev/null:/opt/klipper/docs/null
+      - /run/dbus:/run/dbus
+      - /run/systemd:/run/systemd
+      - ./printer_data/config:/opt/printer_data/config
+      - ./printer_data/gcodes:/opt/printer_data/gcodes
+      - ./printer_data/database:/opt/printer_data/database
+      - ./printer_data/moonraker.secrets:/opt/printer_data/moonraker.secrets
+      - run:/opt/printer_data/run
+      - log:/opt/printer_data/logs
+    labels:
+      org.prind.service: moonraker
+      traefik.enable: true
+      traefik.http.services.moonraker.loadbalancer.server.port: 7125
+      traefik.http.routers.moonraker.rule: PathRegexp(`^/(websocket|printer|api|access|machine|server)`)
+      traefik.http.routers.moonraker.entrypoints: web
+
+  ## Frontends
+  ##
+  mainsail:
+    image: ghcr.io/mainsail-crew/mainsail:edge
+    restart: unless-stopped
+    logging:
+      driver: none
+    labels:
+      org.prind.service: mainsail
+      traefik.enable: true
+      traefik.http.services.mainsail.loadbalancer.server.port: 80
+      traefik.http.routers.mainsail.rule: PathPrefix(`/`)
+      traefik.http.routers.mainsail.entrypoints: web
+
+  ## additional Services
+  ##
+  mobileraker_companion:
+    image: ghcr.io/clon1998/mobileraker_companion:latest
+    restart: unless-stopped
+    logging:
+      driver: none
+    volumes:
+      - ./printer_data/config:/opt/printer_data/config
+    labels:
+      org.prind.service: mobileraker_companion
+
+  hostmcu:
+    image: mkuf/klipper:latest-hostmcu
+    restart: unless-stopped
+    logging:
+      driver: none
+    privileged: true
+    volumes:
+      - /dev:/dev
+      - run:/opt/printer_data/run
+    labels:
+      org.prind.service: hostmcu
+
+  ## Accompanying Services/Infra
+  ##
+
+  ## Config dir needs to be writable by uid/gid 1000
+  ## This container sets the right permissions and exits
+  init:
+    image: busybox:latest
+    command: chown -R 1000:1000 /prind/config
+    volumes:
+      - ./printer_data:/prind
+    labels:
+      org.prind.service: init
+
+  ## Loadbalancer/Proxy
+  traefik:
+    image: traefik:3.3
+    logging:
+      driver: none
+    command:
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      org.prind.service: traefik
+
+volumes:
+  run:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+  log:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs

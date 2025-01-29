@@ -1,0 +1,14 @@
+services:
+  # To invoke:
+  # docker compose -f docker-compose.extra.make.yml run --rm make menuconfig
+  # docker compose -f docker-compose.extra.make.yml run --rm make
+  make:
+    image: mkuf/klipper:${TAG:-latest}-tools
+    tty: true
+    privileged: true
+    entrypoint: make
+    working_dir: /opt/klipper
+    volumes:
+      - /dev:/dev
+      - ./printer_data/config/build.config:/opt/klipper/.config
+      - ./out:/opt/klipper/out
