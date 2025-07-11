@@ -1,0 +1,81 @@
+{
+    "before_layer_change_gcode": ";BEFORE_LAYER_CHANGE\n;[layer_z]\n\n\n",
+    "change_filament_gcode": "M600",
+    "deretraction_speed": [
+        "35"
+    ],
+    "fan_speedup_time": "0.5",
+    "from": "User",
+    "gcode_flavor": "klipper",
+    "inherits": "Elegoo Neptune 3 0.4 nozzle",
+    "is_custom_defined": "0",
+    "machine_end_gcode": "PRINT_END",
+    "machine_max_acceleration_e": [
+        "8000",
+        "5000"
+    ],
+    "machine_max_acceleration_extruding": [
+        "4000",
+        "500"
+    ],
+    "machine_max_acceleration_retracting": [
+        "8000",
+        "1000"
+    ],
+    "machine_max_acceleration_x": [
+        "4000",
+        "500"
+    ],
+    "machine_max_acceleration_y": [
+        "4000",
+        "500"
+    ],
+    "machine_max_jerk_e": [
+        "10",
+        "5"
+    ],
+    "machine_max_jerk_x": [
+        "10",
+        "8"
+    ],
+    "machine_max_jerk_y": [
+        "10",
+        "8"
+    ],
+    "machine_max_jerk_z": [
+        "10",
+        "0.4"
+    ],
+    "machine_max_speed_e": [
+        "10",
+        "60"
+    ],
+    "machine_start_gcode": "M190 S0\nM109 S0\nPRINT_START EXTRUDER=[nozzle_temperature_initial_layer] BED=[bed_temperature_initial_layer_single]\n",
+    "max_layer_height": [
+        "0.3"
+    ],
+    "name": "Neptune 3",
+    "nozzle_type": "brass",
+    "print_host": "192.168.1.12",
+    "printer_settings_id": "Neptune 3",
+    "retract_before_wipe": [
+        "70%"
+    ],
+    "retraction_length": [
+        "0.4"
+    ],
+    "retraction_minimum_travel": [
+        "2"
+    ],
+    "retraction_speed": [
+        "4"
+    ],
+    "thumbnails": "32x32/PNG, 400x400/PNG",
+    "version": "2.2.0.4",
+    "z_hop": [
+        "0"
+    ],
+    "z_hop_types": [
+        "Normal Lift"
+    ]
+}
