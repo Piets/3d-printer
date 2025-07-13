@@ -96,6 +96,20 @@ services:
     labels:
       org.prind.service: hostmcu
 
+  spoolman:
+    image: ghcr.io/donkie/spoolman:latest
+    restart: unless-stopped
+    volumes:
+      - ./printer_data/spoolman:/home/app/.local/share/spoolman
+    environment:
+      SPOOLMAN_BASE_PATH: /spoolman
+    labels:
+      org.prind.service: spoolman
+      traefik.enable: true
+      traefik.http.services.octoprint.loadbalancer.server.port: 8000
+      traefik.http.routers.octoprint.rule: PathPrefix(`/spoolman`)
+      traefik.http.routers.octoprint.entrypoints: web
+
   ## Accompanying Services/Infra
   ##
 
