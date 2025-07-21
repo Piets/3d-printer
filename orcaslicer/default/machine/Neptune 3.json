@@ -2,7 +2,7 @@
     "before_layer_change_gcode": ";BEFORE_LAYER_CHANGE\n;[layer_z]\n\n\n",
     "change_filament_gcode": "M600",
     "deretraction_speed": [
-        "35"
+        "20"
     ],
     "fan_speedup_time": "0.5",
     "from": "User",
@@ -61,14 +61,17 @@
     "retract_before_wipe": [
         "70%"
     ],
+    "retract_when_changing_layer": [
+        "0"
+    ],
     "retraction_length": [
-        "0.4"
+        "0.8"
     ],
     "retraction_minimum_travel": [
-        "2"
+        "1.5"
     ],
     "retraction_speed": [
-        "4"
+        "30"
     ],
     "thumbnails": "32x32/PNG, 400x400/PNG",
     "version": "2.2.0.4",
