@@ -30,7 +30,7 @@
     "outer_wall_speed": "100",
     "print_settings_id": "0.20mm NORMAL @Neptune 3 - Super Fast",
     "skirt_distance": "2",
-    "small_perimeter_speed": "0",
+    "small_perimeter_speed": "80%",
     "small_perimeter_threshold": "6",
     "sparse_infill_pattern": "gyroid",
     "sparse_infill_speed": "175",
